@@ -1,0 +1,70 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-24T18:37:12.698Z",
+  "summary": "Both CameraPermissionGate.tsx files (ar-room and shared-room) have been modified with the core logic fixes: queryPermissionState helper, tryWithBackoff with exponential backoff, tryAllTiers, getBrowserInfo, and BrowserInstructions. The CONSTRAINT_TIERS array includes ideal/minimal/bare/empty tiers. The diff is truncated so some implementation details (diagnostic panel fields, localStorage clearing, Chrome-specific UI note, Try Again behavior) cannot be fully verified from the available content.",
+  "missing_requirements": [
+    {
+      "id": "REQ-107",
+      "requirement": "The diagnostic panel must display: raw Permissions API state, whether the Permissions API query threw, browser user-agent, navigator.mediaDevices availability, and the last getUserMedia error name and message.",
+      "reason": "The diff is truncated before the diagnostic panel JSX is visible. Cannot confirm all six required diagnostic fields are present in the rendered panel.",
+      "evidence": [
+        "frontend/src/components/ar-room/CameraPermissionGate.tsx",
+        "frontend/src/components/shared-room/CameraPermissionGate.tsx"
+      ]
+    },
+    {
+      "id": "REQ-107",
+      "requirement": "localStorage.removeItem('cameraPermissionGranted') must be called when acquisition definitively fails after all tiers and retries.",
+      "reason": "The diff is truncated and does not show the failure path where localStorage is cleared on definitive failure.",
+      "evidence": [
+        "frontend/src/components/ar-room/CameraPermissionGate.tsx",
+        "frontend/src/components/shared-room/CameraPermissionGate.tsx"
+      ]
+    },
+    {
+      "id": "REQ-107",
+      "requirement": "On a successful getUserMedia call, 'cameraPermissionGranted=true' must be written to localStorage.",
+      "reason": "The diff is truncated and the success path where localStorage is set cannot be confirmed.",
+      "evidence": [
+        "frontend/src/components/ar-room/CameraPermissionGate.tsx",
+        "frontend/src/components/shared-room/CameraPermissionGate.tsx"
+      ]
+    },
+    {
+      "id": "REQ-107",
+      "requirement": "The Try Again button must re-query the Permissions API fresh (not from cached state) and re-run the full tiered acquisition sequence.",
+      "reason": "The diff is truncated before the button handler and state management code is shown.",
+      "evidence": [
+        "frontend/src/components/ar-room/CameraPermissionGate.tsx",
+        "frontend/src/components/shared-room/CameraPermissionGate.tsx"
+      ]
+    },
+    {
+      "id": "REQ-108",
+      "requirement": "The Chrome-on-Windows specific note must be shown in the error UI reading: 'If you recently granted camera access but still see this error, click Try Again - Chrome sometimes reports permissions incorrectly. If the problem persists: click the camera/lock icon in the address bar -> Site settings -> Camera -> set to Allow, then click Try Again.'",
+      "reason": "The diff is truncated and the Chrome-specific note in the error UI cannot be confirmed as implemented.",
+      "evidence": [
+        "frontend/src/components/ar-room/CameraPermissionGate.tsx",
+        "frontend/src/components/shared-room/CameraPermissionGate.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Four constraint tiers (ideal, minimal, bare, empty) instead of the three specified (ideal, { video: true }, { video: {} }).",
+      "reason": "The spec specifies exactly three constraint tiers: ideal, { video: true }, and { video: {} }. The diff implements four tiers by adding a 'minimal' tier with facingMode constraints between 'ideal' and 'bare'.",
+      "evidence": [
+        "frontend/src/components/ar-room/CameraPermissionGate.tsx",
+        "frontend/src/components/shared-room/CameraPermissionGate.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.45,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/src/components/ar-room/CameraPermissionGate.tsx",
+    "frontend/src/components/shared-room/CameraPermissionGate.tsx",
+    "project_state.json"
+  ]
+}

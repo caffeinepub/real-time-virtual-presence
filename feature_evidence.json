@@ -1,0 +1,51 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-in-both-frontend-src-components-ar-room-camerapermissiongate-tsx-and-frontend-src-components-shared-room-camerapermissiongate-tsx-diagnose-and-fix-the-specific-failure-mode-where-chrome-on-windows-reports-permission-state-as-denied-even-though-the-user-has-granted-camera-access-at-the-os-browser-level-the-fix-must-1-at-the-very-start-of-the-acquisition-flow-call-navigator-permissions-query-name-camera-as-permissionname-and-log-the-returned-state-to-the-console-for-debugging-2-if-the-permissions-api-itself-throws-some-chrome-builds-have-inconsistent-permissionname-support-catch-that-error-and-fall-back-to-calling-getusermedia-directly-with-the-tiered-constraint-approach-do-not-treat-a-permissions-api-failure-as-a-camera-denial-3-treat-a-denied-state-from-the-permissions-api-as-a-hard-block-only-if-getusermedia-also-throws-notallowederror-after-exhausting-all-three-constraint-tiers-ideal-video-true-video-with-exponential-backoff-retries-250-ms-500-ms-1000-ms-per-tier-4-if-the-permissions-api-returns-denied-but-getusermedia-succeeds-a-known-chrome-quirk-accept-the-stream-and-proceed-do-not-block-access-5-clear-localstorage-removeitem-camerapermissiongranted-when-the-acquisition-truly-fails-after-all-tiers-and-retries-so-the-next-load-does-not-silently-attempt-against-a-known-bad-state-6-update-the-diagnostic-panel-collapsible-shown-by-default-on-error-to-display-the-raw-permissions-api-state-whether-the-permissions-api-query-itself-threw-an-error-the-browser-user-agent-navigator-mediadevices-availability-and-the-last-getusermedia-error-name-and-message-this-is-the-exact-scenario-the-user-reported-chrome-on-windows-mediadevices-available-but-the-component-shows-camera-permission-is-denied-in-browser-settings-despite-the-system-having-granted-access",
+      "featureTitle": "In both `frontend/src/components/ar-room/CameraPermissionGate.tsx` and `frontend/src/components/shared-room/CameraPermissionGate.tsx`, diagnose and fix the specific failure mode where Chrome on Windows reports permission state as 'denied' even though the user has granted camera access at the OS/browser level. The fix must: (1) At the very start of the acquisition flow, call `navigator.permissions.query({ name: 'camera' as PermissionName })` and log the returned state to the console for debugging. (2) If the Permissions API itself throws (some Chrome builds have inconsistent PermissionName support), catch that error and fall back to calling `getUserMedia` directly with the tiered constraint approach — do NOT treat a Permissions API failure as a camera denial. (3) Treat a 'denied' state from the Permissions API as a hard block ONLY if `getUserMedia` also throws `NotAllowedError` after exhausting all three constraint tiers (ideal → `{ video: true }` → `{ video: {} }`) with exponential backoff retries (250 ms, 500 ms, 1000 ms per tier). (4) If the Permissions API returns 'denied' but `getUserMedia` succeeds (a known Chrome quirk), accept the stream and proceed — do not block access. (5) Clear `localStorage.removeItem('cameraPermissionGranted')` when the acquisition truly fails after all tiers and retries, so the next load does not silently attempt against a known-bad state. (6) Update the diagnostic panel (collapsible, shown by default on error) to display: the raw Permissions API state, whether the Permissions API query itself threw an error, the browser user-agent, `navigator.mediaDevices` availability, and the last `getUserMedia` error name and message. This is the exact scenario the user reported: Chrome on Windows, `mediaDevices` available, but the component shows 'Camera permission is denied in browser settings' despite the system having granted access.",
+      "files": [
+        "frontend/src/components/ar-room/CameraPermissionGate.tsx",
+        "frontend/src/components/shared-room/CameraPermissionGate.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "camera@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "qr-code@1.0.0"
+      ],
+      "testIds": [
+        "REQ-107"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-in-both-frontend-src-components-ar-room-camerapermissiongate-tsx-and-frontend-src-components-shared-room-camerapermissiongate-tsx-update-the-browser-specific-guidance-shown-in-the-denied-blocked-error-ui-to-include-a-chrome-on-windows-specific-note-that-reads-if-you-recently-granted-camera-access-but-still-see-this-error-click-try-again-chrome-sometimes-reports-permissions-incorrectly-if-the-problem-persists-click-the-camera-lock-icon-in-the-address-bar-site-settings-camera-set-to-allow-then-click-try-again-this-addresses-the-confirmed-user-scenario-where-chrome-on-windows-shows-a-false-denial-despite-the-system-having-granted-camera-access",
+      "featureTitle": "In both `frontend/src/components/ar-room/CameraPermissionGate.tsx` and `frontend/src/components/shared-room/CameraPermissionGate.tsx`, update the browser-specific guidance shown in the denied/blocked error UI to include a Chrome-on-Windows specific note that reads: 'If you recently granted camera access but still see this error, click Try Again — Chrome sometimes reports permissions incorrectly. If the problem persists: click the camera/lock icon in the address bar → Site settings → Camera → set to Allow, then click Try Again.' This addresses the confirmed user scenario where Chrome on Windows shows a false denial despite the system having granted camera access.",
+      "files": [
+        "frontend/src/components/ar-room/CameraPermissionGate.tsx",
+        "frontend/src/components/shared-room/CameraPermissionGate.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "camera@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "qr-code@1.0.0"
+      ],
+      "testIds": [
+        "REQ-108"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Fix camera blocked on Chrome Windows when permission is already granted",
+  "requirements": [
+    {
+      "id": "REQ-107",
+      "summary": "Diagnose and fix Chrome Windows permission quirk where camera reports 'denied' despite being granted, using tiered constraints with exponential backoff and Permissions API fallback logic",
+      "acceptanceCriteria": [
+        "On Chrome for Windows where the user has already granted camera permission at the browser level, clicking 'Grant Access' (or on silent mount attempt) successfully opens the camera stream without showing 'Camera permission is denied in browser settings'.",
+        "If the Permissions API returns 'denied' but getUserMedia with any constraint tier succeeds, the camera stream is accepted and the gate passes through to the camera view.",
+        "If the Permissions API query itself throws an error, the component falls back to attempting getUserMedia directly with the tiered constraint approach rather than showing a blocked error.",
+        "The diagnostic panel displays the raw Permissions API state, whether the query threw, the browser name, mediaDevices availability, and the last error name and message.",
+        "The localStorage 'cameraPermissionGranted' flag is cleared when the acquisition definitively fails after all tiers and retries, preventing a bad silent-attempt on next load.",
+        "On a successful getUserMedia call, 'cameraPermissionGranted=true' is written to localStorage.",
+        "The 'Try Again' button re-queries the Permissions API fresh (not from cached state) and re-runs the full tiered acquisition sequence.",
+        "The fix applies identically to both the AR room and Shared Room variants of CameraPermissionGate.tsx."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ar-room/CameraPermissionGate.tsx",
+          "operation": "modify",
+          "description": "Implement Chrome Windows permission quirk fix: (1) At the start of acquisition, call navigator.permissions.query({ name: 'camera' as PermissionName }) and log the state. (2) Catch Permissions API errors and fall back to getUserMedia directly. (3) Use tiered constraints (ideal → { video: true } → { video: {} }) with exponential backoff retries (250ms, 500ms, 1000ms) for each tier. (4) Accept the stream if getUserMedia succeeds even when Permissions API reports 'denied'. (5) Clear localStorage.removeItem('cameraPermissionGranted') on definitive failure after all tiers/retries. (6) Update the diagnostic panel (collapsible, shown by default on error) to display: raw Permissions API state, whether the query threw, browser user-agent, navigator.mediaDevices availability, and last getUserMedia error name and message. Verify the camera component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/shared-room/CameraPermissionGate.tsx",
+          "operation": "modify",
+          "description": "Apply identical Chrome Windows permission quirk fix as in the AR room variant: (1) At the start of acquisition, call navigator.permissions.query({ name: 'camera' as PermissionName }) and log the state. (2) Catch Permissions API errors and fall back to getUserMedia directly. (3) Use tiered constraints (ideal → { video: true } → { video: {} }) with exponential backoff retries (250ms, 500ms, 1000ms) for each tier. (4) Accept the stream if getUserMedia succeeds even when Permissions API reports 'denied'. (5) Clear localStorage.removeItem('cameraPermissionGranted') on definitive failure after all tiers/retries. (6) Update the diagnostic panel (collapsible, shown by default on error) to display: raw Permissions API state, whether the query threw, browser user-agent, navigator.mediaDevices availability, and last getUserMedia error name and message. Verify the camera component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-108",
+      "summary": "Add Chrome-on-Windows specific guidance in denied error UI explaining the false-denial quirk and instructing users to click Try Again before manual steps",
+      "acceptanceCriteria": [
+        "When the error UI is displayed on Chrome (detected from user-agent), a specific note is shown explaining that Chrome may incorrectly report denied permissions and instructing the user to click Try Again first before following manual steps.",
+        "The Chrome-on-Windows step-by-step instructions correctly reference: lock/camera icon in the address bar → Site settings → Camera → Allow.",
+        "The 'Try Again' button is prominently displayed and accessible in the error UI for Chrome users.",
+        "The note is shown in both the AR room and Shared Room variants of the denied error UI."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ar-room/CameraPermissionGate.tsx",
+          "operation": "modify",
+          "description": "Update the denied/blocked error UI to include a Chrome-on-Windows specific note: 'If you recently granted camera access but still see this error, click Try Again — Chrome sometimes reports permissions incorrectly. If the problem persists: click the camera/lock icon in the address bar → Site settings → Camera → set to Allow, then click Try Again.' Detect Chrome from user-agent and show this guidance when applicable. Ensure the 'Try Again' button is prominently displayed in the error UI."
+        },
+        {
+          "path": "frontend/src/components/shared-room/CameraPermissionGate.tsx",
+          "operation": "modify",
+          "description": "Apply identical Chrome-on-Windows guidance as in the AR room variant: Update the denied/blocked error UI to include a note explaining that Chrome may incorrectly report denied permissions, instructing the user to click Try Again first, and providing step-by-step instructions referencing the lock/camera icon in the address bar → Site settings → Camera → Allow. Detect Chrome from user-agent and show this guidance when applicable. Ensure the 'Try Again' button is prominently displayed in the error UI."
+        }
+      ]
+    }
+  ]
+}

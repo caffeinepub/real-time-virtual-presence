@@ -1,0 +1,1128 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 41,
+  "summary": "Real-Time Virtual Presence web app with two modes: Shared Virtual Room (web-based with AI background removal, lighting correction, and immersive environment placement) and AR Room Presence (advanced AR projection with floor detection, spatial placement, and shadow blending). Includes real-time photo experience with timer, auto-alignment, HD export, and timelapse reel generation.",
+  "architectural_notes": [
+    "Web-based application with two distinct operational modes",
+    "Real-time video streaming and synchronization required",
+    "AI/ML integration for background removal and lighting correction",
+    "WebRTC for peer-to-peer camera streaming",
+    "Computer vision for floor detection and spatial mapping",
+    "Image processing pipeline for HD export and timelapse generation",
+    "WebXR AR compatibility limited; need alternative AR approach for cross-platform support (iOS, Android, macOS, Windows)",
+    "Consider Unity-based AR solution with ARKit/ARCore native support and WebGL fallback for desktop",
+    "Explore Snap Web Studios/SnapWEB AR as alternative to WebXR",
+    "Real-time mesh deformation for gesture effects"
+  ],
+  "known_issues": [
+    "WebXR AR not supported on Microsoft devices",
+    "WebXR-compatible devices (ARCore/ARKit with WebXR) extremely rare or unavailable",
+    "Screen glitching on home page",
+    "Missing back button on home page",
+    "Camera permission tab glitching",
+    "Camera permission denied error persisting across all browsers (Safari, Chrome-Windows, Android, Firefox) even after user grants system permissions",
+    "Camera permission denied error persists even after user explicitly grants permission and refreshes the page",
+    "Room creation failing with 'failed' error message",
+    "Camera shows 'access denied / Camera access was blocked' even when browser/system has already granted camera permissions — occurs on Grant Access button press",
+    "Deployment failure: 'Failed to fetch dynamically imported module' for LandingPage chunk — likely a build/chunk splitting or deploy asset issue"
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-create-a-frontend-landing-page-that-allows-users-to-choose-between-shared-virtual-room-mode-and-ar-room-presence-mode-with-clear-descriptions-of-each-mode",
+      "title": "Create a frontend landing page that allows users to choose between 'Shared Virtual Room Mode' and 'AR Room Presence Mode' with clear descriptions of each mode",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-shared-virtual-room-mode-with-private-room-link-generation-and-access-control",
+      "title": "Implement Shared Virtual Room Mode with private room link generation and access control",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-real-time-camera-sync-in-shared-virtual-room-mode-where-both-users-camera-feeds-are-visible-simultaneously",
+      "title": "Implement real-time camera sync in Shared Virtual Room Mode where both users' camera feeds are visible simultaneously",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-ai-background-removal-for-both-users-in-shared-virtual-room-mode-to-isolate-their-bodies-from-their-physical-backgrounds",
+      "title": "Integrate AI background removal for both users in Shared Virtual Room Mode to isolate their bodies from their physical backgrounds",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-place-both-users-in-a-shared-immersive-3d-virtual-environment-where-they-appear-together-in-the-same-space",
+      "title": "Place both users in a shared immersive 3D virtual environment where they appear together in the same space",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-ai-lighting-correction-to-both-users-video-feeds-to-match-the-lighting-conditions-of-the-shared-virtual-environment",
+      "title": "Apply AI lighting correction to both users' video feeds to match the lighting conditions of the shared virtual environment",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-ar-room-presence-mode-where-one-user-can-scan-their-physical-room-to-create-a-spatial-map",
+      "title": "Implement AR Room Presence Mode where one user can scan their physical room to create a spatial map",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-display-the-remote-user-as-a-real-time-ar-projection-within-the-scanned-physical-room",
+      "title": "Display the remote user as a real-time AR projection within the scanned physical room",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-floor-detection-and-spatial-placement-so-the-remote-user-s-ar-projection-is-correctly-positioned-on-the-detected-floor-surface",
+      "title": "Implement floor detection and spatial placement so the remote user's AR projection is correctly positioned on the detected floor surface",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enable-users-to-pose-together-in-the-ar-room-presence-mode-within-the-real-physical-environment-and-capture-a-realistic-ar-photo",
+      "title": "Enable users to pose together in the AR Room Presence Mode within the real physical environment and capture a realistic AR photo",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enable-hd-image-export-for-captured-photos-with-high-resolution-output",
+      "title": "Enable HD image export for captured photos with high-resolution output",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-multiple-camera-angle-presets-for-events-including-stage-view-side-view-and-group-view-that-users-can-switch-between",
+      "title": "Implement multiple camera angle presets for events including stage view, side view, and group view that users can switch between",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-cohesive-visual-design-with-a-modern-immersive-aesthetic-that-emphasizes-spatial-technology-and-real-time-connection-using-colors-typography-and-layout-that-feel-cutting-edge-and-inviting-without-defaulting-to-blue-and-purple",
+      "title": "Create a cohesive visual design with a modern, immersive aesthetic that emphasizes spatial technology and real-time connection, using colors, typography, and layout that feel cutting-edge and inviting without defaulting to blue and purple",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-3-second-or-5-second-countdown-timer-ui-that-displays-before-capturing-a-photo-in-both-shared-virtual-room-mode-and-ar-room-presence-mode",
+      "title": "Implement a 3-second or 5-second countdown timer UI that displays before capturing a photo in both Shared Virtual Room Mode and AR Room Presence Mode",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-smart-auto-alignment-that-automatically-adjusts-camera-framing-to-optimally-include-both-users-before-photo-capture-in-both-room-modes",
+      "title": "Implement smart auto-alignment that automatically adjusts camera framing to optimally include both users before photo capture in both room modes",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-photo-capture-functionality-with-a-visual-shutter-effect-and-save-captured-photos-to-storage-in-both-shared-virtual-room-mode-and-ar-room-presence-mode",
+      "title": "Add photo capture functionality with a visual shutter effect and save captured photos to storage in both Shared Virtual Room Mode and AR Room Presence Mode",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enable-hd-image-export-functionality-allowing-users-to-download-captured-photos-at-high-resolution-minimum-1920x1080",
+      "title": "Enable HD image export functionality allowing users to download captured photos at high resolution (minimum 1920x1080)",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-auto-generate-a-timelapse-reel-video-from-multiple-captured-photos-showing-the-sequence-of-photos-taken-during-the-session",
+      "title": "Auto-generate a timelapse reel video from multiple captured photos showing the sequence of photos taken during the session",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-proper-life-sized-scaling-to-the-ar-projection-in-ar-room-presence-mode-so-the-remote-user-appears-at-their-actual-physical-height",
+      "title": "Apply proper life-sized scaling to the AR projection in AR Room Presence Mode so the remote user appears at their actual physical height",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-realistic-shadow-blending-to-the-ar-projection-in-ar-room-presence-mode-so-the-remote-user-casts-shadows-on-the-physical-environment",
+      "title": "Add realistic shadow blending to the AR projection in AR Room Presence Mode so the remote user casts shadows on the physical environment",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-all-webxr-based-ar-implementation-from-ar-room-presence-mode-including-webxr-session-initialization-device-compatibility-checks-and-webxr-specific-rendering-logic",
+      "title": "Remove all WebXR-based AR implementation from AR Room Presence Mode including WebXR session initialization, device compatibility checks, and WebXR-specific rendering logic",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-video-based-ar-overlay-system-using-device-camera-feed-where-the-remote-user-s-video-feed-is-composited-onto-the-local-user-s-camera-view-with-manual-placement-controls-drag-to-position-pinch-to-scale-rotate-gestures",
+      "title": "Implement video-based AR overlay system using device camera feed where the remote user's video feed is composited onto the local user's camera view with manual placement controls (drag to position, pinch to scale, rotate gestures)",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-visual-anchoring-guides-and-grid-overlay-in-ar-room-presence-mode-to-help-users-align-the-remote-user-s-video-with-floor-surfaces-and-physical-space-perspective",
+      "title": "Add visual anchoring guides and grid overlay in AR Room Presence Mode to help users align the remote user's video with floor surfaces and physical space perspective",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-ai-powered-background-removal-for-the-remote-user-s-video-feed-in-ar-room-presence-mode-using-mediapipe-or-tensorflow-js-to-create-transparent-cutout-effect-when-overlaid-on-the-local-camera-feed",
+      "title": "Implement AI-powered background removal for the remote user's video feed in AR Room Presence Mode using MediaPipe or TensorFlow.js to create transparent cutout effect when overlaid on the local camera feed",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-drop-shadow-and-lighting-effects-to-the-remote-user-s-video-overlay-in-ar-room-presence-mode-to-enhance-realism-and-depth-perception-when-composited-on-the-local-camera-feed",
+      "title": "Add drop shadow and lighting effects to the remote user's video overlay in AR Room Presence Mode to enhance realism and depth perception when composited on the local camera feed",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-photo-capture-in-ar-room-presence-mode-that-captures-a-composite-frame-containing-both-the-local-camera-feed-background-and-the-positioned-remote-user-overlay-with-all-effects-applied",
+      "title": "Implement photo capture in AR Room Presence Mode that captures a composite frame containing both the local camera feed background and the positioned remote user overlay with all effects applied",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-preset-positioning-templates-in-ar-room-presence-mode-such-as-standing-next-to-me-sitting-on-chair-far-away-that-automatically-scale-and-position-the-remote-user-s-video-overlay",
+      "title": "Add preset positioning templates in AR Room Presence Mode such as 'standing next to me', 'sitting on chair', 'far away' that automatically scale and position the remote user's video overlay",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-ar-room-presence-mode-landing-page-and-mode-selection-descriptions-to-reflect-the-video-based-ar-overlay-approach-instead-of-webxr-spatial-scanning",
+      "title": "Update AR Room Presence Mode landing page and mode selection descriptions to reflect the video-based AR overlay approach instead of WebXR spatial scanning",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-debug-and-fix-the-login-button-in-loginbutton-tsx-to-ensure-it-properly-triggers-internet-identity-authentication-when-clicked",
+      "title": "Debug and fix the login button in LoginButton.tsx to ensure it properly triggers Internet Identity authentication when clicked",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-check-and-fix-any-event-handler-binding-issues-in-loginbutton-tsx-that-might-prevent-the-onclick-handler-from-executing",
+      "title": "Check and fix any event handler binding issues in LoginButton.tsx that might prevent the onClick handler from executing",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-debug-and-fix-screen-glitching-issue-on-the-home-page-landingpage-tsx-identify-and-resolve-any-rendering-issues-layout-shifts-or-visual-artifacts-causing-the-screen-to-glitch",
+      "title": "Debug and fix screen glitching issue on the home page (LandingPage.tsx) - identify and resolve any rendering issues, layout shifts, or visual artifacts causing the screen to glitch",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-back-button-to-the-home-page-landingpage-tsx-that-allows-users-to-navigate-back-from-the-landing-page",
+      "title": "Add a back button to the home page (LandingPage.tsx) that allows users to navigate back from the landing page",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-camera-access-denied-error-in-dualcameraview-tsx-and-videoaroverlay-tsx-ensure-proper-camera-permissions-are-requested-with-clear-user-messaging-handle-permission-denials-gracefully-with-user-friendly-error-messages-and-retry-mechanism",
+      "title": "Fix camera access denied error in DualCameraView.tsx and VideoAROverlay.tsx - ensure proper camera permissions are requested with clear user messaging, handle permission denials gracefully with user-friendly error messages, and retry mechanism",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-review-and-implement-any-additional-missing-features-from-the-original-feature-list-that-are-not-yet-implemented-in-the-codebase",
+      "title": "Review and implement any additional missing features from the original feature list that are not yet implemented in the codebase",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-camera-permission-tab-glitching-issue-in-dualcameraview-tsx-and-videoaroverlay-tsx-by-implementing-proper-error-handling-and-ui-state-management-for-camera-permission-requests",
+      "title": "Fix camera permission tab glitching issue in DualCameraView.tsx and VideoAROverlay.tsx by implementing proper error handling and UI state management for camera permission requests",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-explicit-camera-permission-request-flow-before-entering-ar-room-presence-mode-that-prompts-users-to-grant-camera-access-with-clear-messaging-before-starting-the-ar-session",
+      "title": "Add explicit camera permission request flow before entering AR Room Presence Mode that prompts users to grant camera access with clear messaging before starting the AR session",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-explicit-camera-permission-request-flow-before-entering-shared-virtual-room-mode-that-prompts-users-to-grant-camera-access-with-clear-messaging-before-starting-the-vr-session",
+      "title": "Add explicit camera permission request flow before entering Shared Virtual Room Mode that prompts users to grant camera access with clear messaging before starting the VR session",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-cheek-pulling-gesture-feature-for-both-ar-and-vr-modes-allow-users-to-drag-fingers-on-the-screen-to-deform-the-recipient-s-cheek-mesh-in-real-time-using-ai-based-mesh-deformation",
+      "title": "Implement Cheek Pulling gesture feature for both AR and VR modes: allow users to drag fingers on the screen to deform the recipient's cheek mesh in real-time using AI-based mesh deformation",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-flying-kiss-gesture-feature-for-both-ar-and-vr-modes-detect-blow-gesture-to-send-a-3d-particle-that-lands-on-partner-s-cheek-and-leaves-a-translucent-lip-mark-that-moves-with-them",
+      "title": "Implement Flying Kiss gesture feature for both AR and VR modes: detect blow gesture to send a 3D particle that lands on partner's cheek and leaves a translucent lip-mark that moves with them",
+      "reqIds": [
+        "REQ-45"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-heartbeat-sync-feature-for-both-ar-and-vr-modes-detect-pulses-when-both-users-place-hands-over-camera-sensors-vibrate-phones-in-synchronized-rhythm-and-display-a-3d-heart-that-pops-and-glows-between-both-chests-on-screen-once-synced",
+      "title": "Implement Heartbeat Sync feature for both AR and VR modes: detect pulses when both users place hands over camera/sensors, vibrate phones in synchronized rhythm, and display a 3D heart that pops and glows between both chests on screen once synced",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-sync-dance-feature-with-on-screen-tutorials-for-trending-instagram-reels-follow-tutorial-choreography-record-both-users-and-use-ai-to-align-movements-perfectly-for-side-by-side-or-merged-reel-output",
+      "title": "Implement Sync-Dance feature with on-screen tutorials for trending Instagram reels: follow tutorial choreography, record both users, and use AI to align movements perfectly for side-by-side or merged reel output",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-investigate-and-fix-the-root-cause-of-camera-permission-denied-errors-in-camerapermissiongate-tsx-both-ar-and-shared-room-variants-that-persist-even-after-users-grant-system-level-camera-permissions-across-safari-chrome-windows-android-and-firefox-browsers",
+      "title": "Investigate and fix the root cause of camera permission denied errors in CameraPermissionGate.tsx (both AR and Shared Room variants) that persist even after users grant system-level camera permissions across Safari, Chrome-Windows, Android, and Firefox browsers",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-detailed-error-logging-in-camerapermissiongate-tsx-components-to-capture-the-exact-error-type-error-message-browser-user-agent-and-permission-state-when-getusermedia-fails",
+      "title": "Add detailed error logging in CameraPermissionGate.tsx components to capture the exact error type, error message, browser user agent, and permission state when getUserMedia fails",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-proper-error-recovery-in-camerapermissiongate-tsx-by-checking-navigator-permissions-query-status-before-calling-getusermedia-and-provide-specific-user-guidance-based-on-the-actual-permission-state-prompt-vs-denied-vs-granted-but-failing",
+      "title": "Implement proper error recovery in CameraPermissionGate.tsx by checking navigator.permissions.query() status before calling getUserMedia, and provide specific user guidance based on the actual permission state (prompt vs denied vs granted-but-failing)",
+      "reqIds": [
+        "REQ-53"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-fallback-constraint-handling-in-camera-permission-requests-to-try-multiple-constraint-configurations-ideal-constraints-first-then-mandatory-constraints-then-minimal-constraints-with-any-video-track-if-the-initial-getusermedia-request-fails",
+      "title": "Add fallback constraint handling in camera permission requests to try multiple constraint configurations (ideal constraints first, then mandatory constraints, then minimal constraints with any video track) if the initial getUserMedia request fails",
+      "reqIds": [
+        "REQ-54"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-diagnostic-test-button-in-camerapermissiongate-tsx-that-allows-users-to-run-a-camera-compatibility-check-showing-browser-detection-navigator-mediadevices-availability-permission-api-support-and-actual-camera-enumeration-results",
+      "title": "Add a diagnostic test button in CameraPermissionGate.tsx that allows users to run a camera compatibility check showing: browser detection, navigator.mediaDevices availability, permission API support, and actual camera enumeration results",
+      "reqIds": [
+        "REQ-55"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-persistent-camera-permission-denied-error-in-camerapermissiongate-tsx-both-ar-and-shared-room-variants-that-occurs-even-after-users-grant-system-level-camera-permissions-and-refresh-the-page",
+      "title": "Fix the persistent camera permission denied error in CameraPermissionGate.tsx (both AR and Shared Room variants) that occurs even after users grant system-level camera permissions and refresh the page",
+      "reqIds": [
+        "REQ-56"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-browser-specific-permission-state-persistence-check-using-navigator-permissions-query-before-calling-getusermedia-to-detect-if-permission-was-previously-granted-and-avoid-unnecessary-re-prompts",
+      "title": "Implement browser-specific permission state persistence check using navigator.permissions.query() before calling getUserMedia() to detect if permission was previously granted and avoid unnecessary re-prompts",
+      "reqIds": [
+        "REQ-57"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-localstorage-or-sessionstorage-caching-of-successful-camera-permission-grants-to-track-permission-state-across-page-refreshes-and-prevent-re-prompting-users-who-have-already-granted-access",
+      "title": "Add localStorage or sessionStorage caching of successful camera permission grants to track permission state across page refreshes and prevent re-prompting users who have already granted access",
+      "reqIds": [
+        "REQ-58"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-automatic-camera-stream-retry-logic-with-exponential-backoff-when-getusermedia-fails-after-permission-is-granted-to-handle-browser-timing-issues-and-race-conditions",
+      "title": "Implement automatic camera stream retry logic with exponential backoff when getUserMedia() fails after permission is granted, to handle browser timing issues and race conditions",
+      "reqIds": [
+        "REQ-59"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-prominent-feature-highlights-section-on-the-landing-page-landingpage-tsx-that-showcases-key-features-with-icons-descriptions-and-visual-indicators-showing-which-features-are-available-in-vr-mode-and-which-in-ar-mode",
+      "title": "Add prominent feature highlights section on the landing page (LandingPage.tsx) that showcases key features with icons, descriptions, and visual indicators showing which features are available in VR mode and which in AR mode",
+      "reqIds": [
+        "REQ-60"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-mode-compatibility-indicators-to-each-feature-highlight-showing-whether-the-feature-is-available-in-shared-virtual-room-mode-ar-room-presence-mode-or-both-modes",
+      "title": "Add mode compatibility indicators to each feature highlight showing whether the feature is available in Shared Virtual Room Mode, AR Room Presence Mode, or both modes",
+      "reqIds": [
+        "REQ-61"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-interactive-features-showcase-on-the-landing-page-with-hover-effects-and-optional-click-to-expand-details-that-provide-more-information-about-each-feature-s-functionality",
+      "title": "Create an interactive features showcase on the landing page with hover effects and optional click-to-expand details that provide more information about each feature's functionality",
+      "reqIds": [
+        "REQ-62"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-debug-and-fix-the-room-creation-failure-in-createroompage-tsx-by-adding-comprehensive-error-logging-to-capture-the-exact-error-message-error-type-and-backend-response-when-the-createroom-mutation-fails",
+      "title": "Debug and fix the room creation failure in CreateRoomPage.tsx by adding comprehensive error logging to capture the exact error message, error type, and backend response when the createRoom mutation fails",
+      "reqIds": [
+        "REQ-63"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-that-the-usecreateroom-mutation-in-usequeries-ts-properly-propagates-backend-errors-to-the-ui-and-displays-user-friendly-error-messages-in-createroompage-tsx-using-toast-notifications",
+      "title": "Verify that the useCreateRoom mutation in useQueries.ts properly propagates backend errors to the UI and displays user-friendly error messages in CreateRoomPage.tsx using toast notifications",
+      "reqIds": [
+        "REQ-65"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-input-validation-in-createroompage-tsx-to-check-room-id-format-before-submission-and-provide-immediate-feedback-for-invalid-inputs-e-g-empty-string-special-characters-length-constraints",
+      "title": "Add input validation in CreateRoomPage.tsx to check room ID format before submission and provide immediate feedback for invalid inputs (e.g., empty string, special characters, length constraints)",
+      "reqIds": [
+        "REQ-66"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-check-if-internet-identity-authentication-state-is-properly-initialized-before-allowing-room-creation-and-display-a-clear-message-if-the-user-is-not-authenticated-or-the-actor-is-not-ready",
+      "title": "Check if Internet Identity authentication state is properly initialized before allowing room creation, and display a clear message if the user is not authenticated or the actor is not ready",
+      "reqIds": [
+        "REQ-67"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-claid-ai-api-for-image-upscaling-in-the-hd-export-flow-after-a-photo-is-captured-in-either-shared-virtual-room-mode-or-ar-room-presence-mode-send-the-jpeg-blob-to-the-claid-ai-upscale-endpoint-and-return-the-high-resolution-300-dpi-minimum-result-as-the-downloadable-file-fall-back-to-the-existing-canvas-based-scaling-if-the-api-is-unavailable-or-returns-an-error",
+      "title": "Integrate Claid.ai API for image upscaling in the HD export flow: after a photo is captured in either Shared Virtual Room Mode or AR Room Presence Mode, send the JPEG blob to the Claid.ai upscale endpoint and return the high-resolution (300 DPI minimum) result as the downloadable file. Fall back to the existing canvas-based scaling if the API is unavailable or returns an error.",
+      "reqIds": [
+        "REQ-68"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-clipdrop-relight-api-for-post-capture-lighting-correction-after-photo-capture-in-both-modes-send-the-captured-image-to-the-clipdrop-relight-endpoint-to-match-facial-lighting-to-the-virtual-ar-environment-lighting-and-replace-the-stored-photo-with-the-relighted-version-display-a-brief-enhancing-lighting-spinner-during-processing",
+      "title": "Integrate Clipdrop Relight API for post-capture lighting correction: after photo capture in both modes, send the captured image to the Clipdrop Relight endpoint to match facial lighting to the virtual/AR environment lighting, and replace the stored photo with the relighted version. Display a brief 'Enhancing lighting…' spinner during processing.",
+      "reqIds": [
+        "REQ-69"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-adobe-firefly-api-for-shadow-and-color-blending-on-merged-composite-photos-after-compositing-the-two-users-video-frames-into-a-single-photo-in-both-shared-virtual-room-and-ar-presence-modes-call-the-adobe-firefly-generative-fill-or-blending-endpoint-to-automatically-match-shadows-and-color-tones-between-the-two-subjects-then-store-the-blended-result",
+      "title": "Integrate Adobe Firefly API for shadow and color blending on merged/composite photos: after compositing the two users' video frames into a single photo (in both Shared Virtual Room and AR Presence modes), call the Adobe Firefly generative fill or blending endpoint to automatically match shadows and color tones between the two subjects, then store the blended result.",
+      "reqIds": [
+        "REQ-70"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-digital-scratch-card-feature-after-a-photo-session-generate-a-shareable-link-that-opens-a-scratch-card-interface-in-the-browser-the-scratch-card-overlays-a-metallic-foil-texture-on-top-of-the-composite-photo-when-the-user-scratches-touch-drag-or-mouse-drag-to-reveal-more-than-60-of-the-surface-the-full-merged-photo-is-revealed-along-with-a-pre-recorded-audio-message-playback-button-the-scratch-card-state-must-be-generated-client-side-without-requiring-a-backend-round-trip-for-the-reveal-animation",
+      "title": "Implement a Digital Scratch Card feature: after a photo session, generate a shareable link that opens a scratch card interface in the browser. The scratch card overlays a metallic/foil texture on top of the composite photo. When the user scratches (touch drag or mouse drag) to reveal more than 60% of the surface, the full merged photo is revealed along with a pre-recorded audio message playback button. The scratch card state must be generated client-side without requiring a backend round-trip for the reveal animation.",
+      "reqIds": [
+        "REQ-71"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-an-ar-qr-card-feature-after-a-photo-session-generate-a-qr-code-that-encodes-the-url-to-the-session-s-timelapse-reel-display-the-qr-code-in-the-photo-gallery-ui-under-a-label-scan-to-watch-your-behind-the-scenes-reel-when-the-qr-code-url-is-opened-it-plays-the-timelapse-reel-video-inline-in-the-browser-without-requiring-a-native-app",
+      "title": "Implement an AR QR Card feature: after a photo session, generate a QR code that encodes the URL to the session's timelapse reel. Display the QR code in the photo gallery UI under a label 'Scan to watch your behind-the-scenes reel'. When the QR code URL is opened, it plays the timelapse reel video inline in the browser without requiring a native app.",
+      "reqIds": [
+        "REQ-72"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-instant-downloads-feature-in-the-photo-gallery-add-a-prominent-instant-downloads-section-with-two-one-click-download-buttons-download-perfect-photo-hd-which-downloads-the-highest-resolution-composite-photo-and-download-behind-the-scenes-reel-which-downloads-the-auto-generated-timelapse-video-both-buttons-should-show-a-download-progress-indicator-and-use-descriptive-timestamped-filenames",
+      "title": "Implement Instant Downloads feature in the photo gallery: add a prominent 'Instant Downloads' section with two one-click download buttons — 'Download Perfect Photo (HD)' which downloads the highest-resolution composite photo, and 'Download Behind-the-Scenes Reel' which downloads the auto-generated timelapse video. Both buttons should show a download progress indicator and use descriptive timestamped filenames.",
+      "reqIds": [
+        "REQ-73"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-sync-dance-mode-ui-stub-in-both-shared-virtual-room-and-ar-room-presence-pages-show-a-sync-dance-button-in-the-gesture-controls-panel-when-tapped-display-an-on-screen-tutorial-overlay-showing-a-trending-dance-choreography-reference-video-use-a-placeholder-looping-animation-or-static-frame-if-no-video-asset-is-available-add-a-record-sync-button-that-records-both-users-camera-feeds-simultaneously-for-15-seconds-then-displays-the-recorded-clips-side-by-side-for-review-and-download-ai-movement-alignment-is-out-of-scope-for-this-iteration-record-and-display-only",
+      "title": "Add a Sync-Dance mode UI stub in both Shared Virtual Room and AR Room Presence pages: show a 'Sync Dance' button in the gesture controls panel. When tapped, display an on-screen tutorial overlay showing a trending dance choreography reference video (use a placeholder looping animation or static frame if no video asset is available). Add a 'Record & Sync' button that records both users' camera feeds simultaneously for 15 seconds, then displays the recorded clips side-by-side for review and download. AI movement alignment is out of scope for this iteration — record and display only.",
+      "reqIds": [
+        "REQ-74"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-landing-page-hero-section-and-mode-description-cards-to-prominently-reference-the-ai-and-api-tools-used-mention-clipdrop-relight-for-lighting-correction-claid-ai-for-hd-upscaling-adobe-firefly-for-photo-blending-and-the-gesture-features-cheek-pulling-flying-kiss-heartbeat-sync-sync-dance-each-tool-mention-should-link-to-its-official-url-as-a-subtle-footnote-or-tooltip-using-the-links-from-the-uploaded-reference-table",
+      "title": "Update the landing page hero section and mode description cards to prominently reference the AI and API tools used: mention Clipdrop Relight for lighting correction, Claid.ai for HD upscaling, Adobe Firefly for photo blending, and the gesture features (Cheek Pulling, Flying Kiss, Heartbeat Sync, Sync Dance). Each tool mention should link to its official URL as a subtle footnote or tooltip, using the links from the uploaded reference table.",
+      "reqIds": [
+        "REQ-75"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-rewrite-the-camera-acquisition-logic-in-both-frontend-src-components-ar-room-camerapermissiongate-tsx-and-frontend-src-components-shared-room-camerapermissiongate-tsx-so-that-pressing-grant-access-never-shows-camera-access-was-blocked-when-the-browser-system-has-already-granted-camera-permission-the-fix-must-1-check-navigator-permissions-query-name-camera-first-and-act-on-the-returned-state-granted-denied-prompt-before-calling-getusermedia-2-if-state-is-granted-but-getusermedia-still-throws-automatically-retry-up-to-3-times-with-exponential-backoff-250-ms-500-ms-1000-ms-before-showing-any-error-3-try-three-constraint-tiers-in-order-ideal-constraints-video-facingmode-user-width-ideal-1280-height-ideal-720-then-minimal-constraints-video-true-then-bare-video-stopping-at-the-first-success-4-only-show-the-camera-access-was-blocked-reset-permissions-error-ui-when-the-permission-state-is-definitively-denied-after-all-retries-and-all-constraint-tiers-have-been-exhausted-5-on-success-write-camerapermissiongranted-true-to-localstorage-so-subsequent-loads-skip-the-permission-prompt-and-proceed-directly-to-the-camera-stream-6-on-component-mount-read-that-cached-flag-and-if-present-attempt-getusermedia-silently-without-showing-the-permission-gate-ui-only-fall-back-to-showing-the-gate-if-the-silent-attempt-fails",
+      "title": "Rewrite the camera acquisition logic in both `frontend/src/components/ar-room/CameraPermissionGate.tsx` and `frontend/src/components/shared-room/CameraPermissionGate.tsx` so that pressing 'Grant Access' never shows 'Camera access was blocked' when the browser/system has already granted camera permission. The fix must: (1) Check `navigator.permissions.query({ name: 'camera' })` first and act on the returned state ('granted', 'denied', 'prompt') before calling `getUserMedia`; (2) If state is 'granted' but `getUserMedia` still throws, automatically retry up to 3 times with exponential backoff (250 ms, 500 ms, 1000 ms) before showing any error; (3) Try three constraint tiers in order — ideal constraints (`{ video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } } }`), then minimal constraints (`{ video: true }`), then bare `{ video: {} }` — stopping at the first success; (4) Only show the 'Camera access was blocked / reset permissions' error UI when the permission state is definitively 'denied' after all retries and all constraint tiers have been exhausted; (5) On success, write `cameraPermissionGranted=true` to `localStorage` so subsequent loads skip the permission prompt and proceed directly to the camera stream; (6) On component mount, read that cached flag and, if present, attempt `getUserMedia` silently without showing the permission gate UI — only fall back to showing the gate if the silent attempt fails.",
+      "reqIds": [
+        "REQ-77"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-deployment-build-failure-where-the-app-crashes-with-failed-to-fetch-dynamically-imported-module-for-the-landingpage-chunk-landingpage-ct3mjbgk-js-audit-the-vite-react-lazy-loading-configuration-in-app-tsx-and-ensure-landingpage-is-either-eagerly-imported-or-its-lazy-dynamic-import-is-correctly-configured-so-the-chunk-is-included-in-the-deployed-asset-bundle-verify-all-other-lazily-loaded-page-routes-arroompresencepage-sharedvirtualroompage-createroompage-scratchcardpage-timelapseplayerpage-are-similarly-stable-and-will-not-produce-missing-chunk-errors-on-deploy",
+      "title": "Fix the deployment build failure where the app crashes with 'Failed to fetch dynamically imported module' for the LandingPage chunk (LandingPage-CT3MJbgk.js). Audit the Vite/React lazy-loading configuration in App.tsx and ensure LandingPage is either eagerly imported or its lazy/dynamic import is correctly configured so the chunk is included in the deployed asset bundle. Verify all other lazily-loaded page routes (ARRoomPresencePage, SharedVirtualRoomPage, CreateRoomPage, ScratchCardPage, TimelapsePlayerPage) are similarly stable and will not produce missing-chunk errors on deploy.",
+      "reqIds": [
+        "REQ-78"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-fix-the-room-id-input-field-in-createroompage-tsx-so-that-users-can-type-freely-in-the-text-input-audit-the-input-element-for-any-controlled-uncontrolled-state-conflicts-missing-onchange-handlers-disabled-props-or-event-propagation-issues-that-prevent-keyboard-input-ensure-the-input-value-is-correctly-bound-to-react-state-and-updates-on-every-keystroke",
+      "title": "Fix the Room ID input field in CreateRoomPage.tsx so that users can type freely in the text input. Audit the input element for any controlled/uncontrolled state conflicts, missing onChange handlers, disabled props, or event propagation issues that prevent keyboard input. Ensure the input value is correctly bound to React state and updates on every keystroke.",
+      "reqIds": [
+        "REQ-79"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-perform-a-comprehensive-end-to-end-audit-and-hardening-of-camera-permission-handling-in-both-frontend-src-components-ar-room-camerapermissiongate-tsx-and-frontend-src-components-shared-room-camerapermissiongate-tsx-verify-that-the-full-fix-from-the-previous-implementation-is-correctly-applied-and-functioning-1-navigator-permissions-query-name-camera-is-checked-before-getusermedia-2-exponential-backoff-retry-250-ms-500-ms-1000-ms-is-triggered-when-permission-is-granted-but-getusermedia-throws-3-three-constraint-tiers-are-attempted-in-order-ideal-minimal-bare-4-the-camera-access-was-blocked-error-ui-is-only-shown-when-state-is-definitively-denied-after-all-retries-5-camerapermissiongranted-true-is-written-to-localstorage-on-success-6-on-mount-the-cached-flag-triggers-a-silent-getusermedia-attempt-before-showing-the-gate-ui-if-any-of-these-steps-are-missing-or-broken-reapply-them-add-a-visible-diagnostic-panel-collapsible-showing-the-current-permission-state-browser-and-last-error-to-aid-debugging",
+      "title": "Perform a comprehensive end-to-end audit and hardening of camera permission handling in both frontend/src/components/ar-room/CameraPermissionGate.tsx and frontend/src/components/shared-room/CameraPermissionGate.tsx. Verify that the full fix from the previous implementation is correctly applied and functioning: (1) navigator.permissions.query({ name: 'camera' }) is checked before getUserMedia; (2) exponential backoff retry (250 ms, 500 ms, 1000 ms) is triggered when permission is 'granted' but getUserMedia throws; (3) three constraint tiers are attempted in order (ideal → minimal → bare); (4) the 'Camera access was blocked' error UI is only shown when state is definitively 'denied' after all retries; (5) cameraPermissionGranted=true is written to localStorage on success; (6) on mount, the cached flag triggers a silent getUserMedia attempt before showing the gate UI. If any of these steps are missing or broken, reapply them. Add a visible diagnostic panel (collapsible) showing the current permission state, browser, and last error to aid debugging.",
+      "reqIds": [
+        "REQ-80"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-snap-camera-kit-integration-stub-for-the-flying-kiss-and-cheek-pull-gesture-features-in-both-ar-room-presence-and-shared-virtual-room-modes-in-the-gesture-controls-panel-of-each-mode-add-a-snap-effects-toggle-button-when-enabled-display-a-placeholder-ui-indicating-snap-camera-kit-lenses-are-active-with-a-note-that-snap-camera-kit-sdk-integration-is-configured-add-the-lens-group-id-and-api-token-as-environment-variables-vite-snap-lens-group-id-and-vite-snap-api-token-wire-the-flying-kiss-and-cheek-pull-gesture-triggers-to-call-a-snapcamerakit-applylens-stub-function-that-logs-the-lens-activation-to-the-console-document-the-integration-point-clearly-with-todo-comments-for-full-sdk-binding",
+      "title": "Add a Snap Camera Kit integration stub for the Flying Kiss and Cheek Pull gesture features in both AR Room Presence and Shared Virtual Room modes. In the gesture controls panel of each mode, add a 'Snap Effects' toggle button. When enabled, display a placeholder UI indicating Snap Camera Kit lenses are active, with a note that Snap Camera Kit SDK integration is configured (add the lens group ID and API token as environment variables VITE_SNAP_LENS_GROUP_ID and VITE_SNAP_API_TOKEN). Wire the Flying Kiss and Cheek Pull gesture triggers to call a snapCameraKit.applyLens() stub function that logs the lens activation to the console. Document the integration point clearly with TODO comments for full SDK binding.",
+      "reqIds": [
+        "REQ-81"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-heartbeat-sync-integration-stub-for-healthkit-ios-google-fit-in-the-useheartbeatsync-ts-hook-and-heartbeatsyncui-tsx-component-add-a-use-device-health-sensor-option-alongside-the-existing-rppg-camera-based-detection-when-selected-display-a-placeholder-ui-with-instructions-for-the-user-to-open-apple-health-google-fit-on-their-device-and-grant-permissions-and-show-a-simulated-bpm-reading-from-a-configurable-mock-value-defaulting-to-72-bpm-to-demonstrate-the-ui-add-environment-variable-vite-google-fit-client-id-as-a-placeholder-for-the-oauth-client-id-document-the-full-healthkit-google-fit-rest-api-integration-points-with-todo-comments",
+      "title": "Add a Heartbeat Sync integration stub for HealthKit (iOS) / Google Fit in the useHeartbeatSync.ts hook and HeartbeatSyncUI.tsx component. Add a 'Use Device Health Sensor' option alongside the existing rPPG camera-based detection. When selected, display a placeholder UI with instructions for the user to open Apple Health / Google Fit on their device and grant permissions, and show a simulated BPM reading from a configurable mock value (defaulting to 72 BPM) to demonstrate the UI. Add environment variable VITE_GOOGLE_FIT_CLIENT_ID as a placeholder for the OAuth client ID. Document the full HealthKit / Google Fit REST API integration points with TODO comments.",
+      "reqIds": [
+        "REQ-82"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-printrove-physical-delivery-integration-stub-in-the-photo-gallery-both-arphotogallery-tsx-and-photogallery-tsx-add-a-print-deliver-button-below-the-hd-download-button-when-clicked-open-a-modal-form-with-fields-for-recipient-name-phone-number-delivery-address-line-1-city-pin-code-and-print-size-selection-4x6-5x7-8x10-on-form-submission-log-the-order-payload-to-the-console-and-show-a-success-toast-saying-print-order-placed-delivery-via-printrove-india-add-environment-variable-vite-printrove-api-key-as-a-placeholder-document-the-printrove-api-endpoint-https-printrove-com-api-integration-point-with-todo-comments",
+      "title": "Add a Printrove physical delivery integration stub in the photo gallery (both ARPhotoGallery.tsx and PhotoGallery.tsx). Add a 'Print & Deliver' button below the HD download button. When clicked, open a modal form with fields for: recipient name, phone number, delivery address (line 1, city, PIN code), and print size selection (4x6, 5x7, 8x10). On form submission, log the order payload to the console and show a success toast saying 'Print order placed! Delivery via Printrove (India)'. Add environment variable VITE_PRINTROVE_API_KEY as a placeholder. Document the Printrove API endpoint (https://printrove.com/api) integration point with TODO comments.",
+      "reqIds": [
+        "REQ-83"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-shotstack-trending-reels-integration-stub-in-both-photo-galleries-and-the-syncdancereview-tsx-component-add-an-create-trending-reel-button-in-the-photo-gallery-and-a-auto-edit-with-music-button-in-syncdancereview-when-clicked-show-a-modal-with-a-generating-your-music-synced-reel-spinner-and-after-3-seconds-display-a-placeholder-success-message-your-reel-is-being-processed-by-shotstack-you-will-receive-a-download-link-shortly-add-environment-variable-vite-shotstack-api-key-document-the-shotstack-render-api-endpoint-https-api-shotstack-io-stage-render-integration-point-with-todo-comments",
+      "title": "Add a Shotstack trending reels integration stub in both photo galleries and the SyncDanceReview.tsx component. Add an 'Create Trending Reel' button in the photo gallery and a 'Auto-Edit with Music' button in SyncDanceReview. When clicked, show a modal with a 'Generating your music-synced reel…' spinner and after 3 seconds display a placeholder success message: 'Your reel is being processed by Shotstack — you will receive a download link shortly.' Add environment variable VITE_SHOTSTACK_API_KEY. Document the Shotstack render API endpoint (https://api.shotstack.io/stage/render) integration point with TODO comments.",
+      "reqIds": [
+        "REQ-84"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-an-invideo-ai-timelapse-blooper-integration-stub-in-the-timelapse-photo-gallery-section-add-a-create-blooper-video-button-next-to-the-existing-timelapse-download-button-in-timelapseviewer-tsx-and-instantdownloads-tsx-when-clicked-show-a-modal-with-sending-photos-to-invideo-ai-for-photo-to-video-automation-and-after-a-3-second-simulated-delay-show-your-blooper-video-is-being-generated-check-back-shortly-add-environment-variable-vite-invideo-api-key-document-the-invideo-ai-api-integration-point-with-todo-comments",
+      "title": "Add an InVideo AI timelapse blooper integration stub in the timelapse/photo gallery section. Add a 'Create Blooper Video' button next to the existing timelapse download button in TimelapseViewer.tsx and InstantDownloads.tsx. When clicked, show a modal with 'Sending photos to InVideo AI for photo-to-video automation…' and after a 3-second simulated delay show: 'Your blooper video is being generated — check back shortly.' Add environment variable VITE_INVIDEO_API_KEY. Document the InVideo AI API integration point with TODO comments.",
+      "reqIds": [
+        "REQ-85"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-mediapipe-dance-tutorial-body-tracking-integration-stub-in-the-sync-dance-feature-syncdancetutorial-tsx-and-the-sync-dance-overlay-in-both-room-pages-add-a-body-tracking-mode-toggle-in-the-tutorial-overlay-when-enabled-show-a-placeholder-overlay-with-a-silhouette-guide-and-the-text-stand-here-mediapipe-is-tracking-your-position-with-colored-skeleton-joint-dots-drawn-over-the-video-feed-canvas-use-a-static-mock-skeleton-fixed-joint-positions-for-the-stub-add-todo-comments-documenting-where-mediapipe-pose-https-mediapipe-dev-should-be-loaded-via-cdn-and-where-real-pose-landmark-data-replaces-the-mock-positions",
+      "title": "Add a MediaPipe dance tutorial body-tracking integration stub in the Sync Dance feature (SyncDanceTutorial.tsx and the sync dance overlay in both room pages). Add a 'Body Tracking Mode' toggle in the tutorial overlay. When enabled, show a placeholder overlay with a silhouette guide and the text 'Stand Here — MediaPipe is tracking your position' with colored skeleton joint dots drawn over the video feed canvas. Use a static mock skeleton (fixed joint positions) for the stub. Add TODO comments documenting where MediaPipe Pose (https://mediapipe.dev) should be loaded via CDN and where real pose landmark data replaces the mock positions.",
+      "reqIds": [
+        "REQ-86"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-parchment-letter-canvas-feature-accessible-from-both-room-modes-add-a-write-a-letter-button-in-the-gesture-extras-controls-panel-when-clicked-open-a-fullscreen-modal-containing-an-html5-canvas-with-a-parchment-texture-background-use-a-warm-aged-paper-css-gradient-as-the-texture-integrate-atrament-js-loaded-from-cdn-https-cdn-jsdelivr-net-npm-atrament-dist-atrament-min-js-for-smooth-brush-based-handwriting-input-add-a-2-minute-countdown-timer-using-setinterval-that-displays-remaining-time-and-locks-the-canvas-disables-drawing-when-time-expires-showing-letter-sealed-include-a-clear-button-and-a-save-letter-button-that-captures-the-canvas-as-a-png-and-triggers-a-browser-download",
+      "title": "Implement a Parchment Letter Canvas feature accessible from both room modes. Add a 'Write a Letter' button in the gesture/extras controls panel. When clicked, open a fullscreen modal containing an HTML5 Canvas with a parchment texture background (use a warm aged-paper CSS gradient as the texture). Integrate Atrament.js (loaded from CDN: https://cdn.jsdelivr.net/npm/atrament/dist/atrament.min.js) for smooth brush-based handwriting input. Add a 2-minute countdown timer using setInterval that displays remaining time and locks the canvas (disables drawing) when time expires, showing 'Letter sealed!' Include a 'Clear' button and a 'Save Letter' button that captures the canvas as a PNG and triggers a browser download.",
+      "reqIds": [
+        "REQ-87"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-howler-js-for-audio-effects-management-load-howler-js-from-cdn-https-cdn-jsdelivr-net-npm-howler-dist-howler-min-js-add-ambient-audio-effect-triggers-in-the-parchment-letter-canvas-modal-play-a-subtle-paper-rustling-sound-when-the-user-starts-drawing-and-a-wax-cracking-sound-when-the-letter-is-sealed-use-short-placeholder-base64-encoded-silent-audio-clips-as-stubs-for-the-actual-sound-files-with-todo-comments-marking-where-real-audio-asset-urls-paper-rustle-mp3-wax-crack-mp3-should-be-substituted-ensure-sounds-respect-browser-autoplay-policies-by-only-playing-in-response-to-user-interaction-events",
+      "title": "Integrate Howler.js for audio effects management. Load Howler.js from CDN (https://cdn.jsdelivr.net/npm/howler/dist/howler.min.js). Add ambient audio effect triggers in the Parchment Letter Canvas modal: play a subtle paper-rustling sound when the user starts drawing, and a wax-cracking sound when the letter is sealed. Use short placeholder base64-encoded silent audio clips as stubs for the actual sound files, with TODO comments marking where real audio asset URLs (paper-rustle.mp3, wax-crack.mp3) should be substituted. Ensure sounds respect browser autoplay policies by only playing in response to user interaction events.",
+      "reqIds": [
+        "REQ-88"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-createroompage-tsx-add-a-robust-actor-readiness-guard-before-attempting-room-creation-before-the-form-submission-handler-calls-the-createroom-mutation-check-whether-the-backend-actor-is-initialized-and-available-if-the-actor-is-not-yet-ready-e-g-useactor-returns-null-undefined-or-the-query-is-in-a-loading-state-display-a-clear-inline-message-such-as-connecting-to-backend-please-wait-and-disable-the-submit-button-until-the-actor-is-available-do-not-show-actor-not-available-as-a-raw-error-translate-any-actor-unavailability-condition-into-a-user-friendly-loading-or-retry-state",
+      "title": "In CreateRoomPage.tsx, add a robust actor-readiness guard before attempting room creation. Before the form submission handler calls the createRoom mutation, check whether the backend actor is initialized and available. If the actor is not yet ready (e.g., useActor returns null/undefined or the query is in a loading state), display a clear inline message such as 'Connecting to backend… please wait' and disable the submit button until the actor is available. Do not show 'actor not available' as a raw error — translate any actor-unavailability condition into a user-friendly loading or retry state.",
+      "reqIds": [
+        "REQ-89"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-usequeries-ts-ensure-the-usecreateroom-mutation-checks-that-the-actor-is-non-null-before-invoking-the-backend-call-if-the-actor-is-null-or-undefined-at-the-time-of-mutation-invocation-throw-a-descriptive-error-e-g-backend-actor-is-not-initialized-please-ensure-you-are-authenticated-and-try-again-so-that-the-error-message-surfaced-in-createroompage-tsx-is-clear-and-actionable-rather-than-a-raw-actor-reference-error",
+      "title": "In useQueries.ts, ensure the useCreateRoom mutation checks that the actor is non-null before invoking the backend call. If the actor is null or undefined at the time of mutation invocation, throw a descriptive error (e.g., 'Backend actor is not initialized. Please ensure you are authenticated and try again.') so that the error message surfaced in CreateRoomPage.tsx is clear and actionable rather than a raw actor reference error.",
+      "reqIds": [
+        "REQ-90"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-pages-createroompage-tsx-replace-the-current-actor-readiness-polling-waiting-logic-with-a-deterministic-readiness-check-on-component-mount-immediately-read-the-cached-actor-from-react-query-s-cache-if-the-actor-is-not-yet-available-display-a-lightweight-initializing-connection-indicator-and-automatically-retry-every-500-ms-up-to-10-retries-5-seconds-total-before-showing-a-permanent-could-not-connect-to-backend-please-refresh-the-page-error-do-not-block-the-entire-page-render-during-this-wait-only-disable-the-submit-button",
+      "title": "In `frontend/src/pages/CreateRoomPage.tsx`, replace the current actor-readiness polling/waiting logic with a deterministic readiness check. On component mount, immediately read the cached actor from React Query's cache. If the actor is not yet available, display a lightweight 'Initializing connection…' indicator and automatically retry every 500 ms (up to 10 retries / 5 seconds total) before showing a permanent 'Could not connect to backend — please refresh the page' error. Do not block the entire page render during this wait; only disable the submit button.",
+      "reqIds": [
+        "REQ-92"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-hooks-usequeries-ts-add-a-connection-health-check-query-usebackendhealth-that-calls-a-lightweight-backend-method-e-g-a-no-op-or-getprofile-call-immediately-after-actor-creation-to-verify-the-actor-can-actually-communicate-with-the-canister-if-the-health-check-fails-within-3-seconds-surface-a-toast-notification-backend-connection-failed-retrying-and-automatically-retry-the-actor-creation-up-to-3-times-before-showing-a-persistent-backend-unavailable-error-state",
+      "title": "In `frontend/src/hooks/useQueries.ts`, add a connection health-check query (`useBackendHealth`) that calls a lightweight backend method (e.g., a no-op or `getProfile` call) immediately after actor creation to verify the actor can actually communicate with the canister. If the health check fails within 3 seconds, surface a toast notification: 'Backend connection failed — retrying…' and automatically retry the actor creation up to 3 times before showing a persistent 'Backend unavailable' error state.",
+      "reqIds": [
+        "REQ-94"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-completely-rewrite-the-camera-acquisition-logic-in-both-frontend-src-components-ar-room-camerapermissiongate-tsx-and-frontend-src-components-shared-room-camerapermissiongate-tsx-to-eliminate-the-false-camera-access-blocked-error-that-appears-even-when-the-browser-system-has-already-granted-camera-permission-the-new-logic-must-follow-this-exact-sequence-on-every-attempt-1-before-calling-getusermedia-query-navigator-permissions-query-name-camera-if-the-result-state-is-denied-show-the-blocked-ui-immediately-if-granted-or-prompt-proceed-to-step-2-2-attempt-getusermedia-using-three-constraint-tiers-in-order-first-video-facingmode-user-width-ideal-1280-height-ideal-720-then-video-true-then-video-stopping-and-succeeding-at-the-first-tier-that-does-not-throw-3-if-getusermedia-throws-despite-the-permission-state-being-granted-retry-automatically-up-to-3-times-using-exponential-backoff-delays-of-250-ms-500-ms-and-1000-ms-before-proceeding-to-the-next-constraint-tier-4-only-display-the-camera-access-blocked-reset-permissions-error-ui-after-all-three-constraint-tiers-and-all-retries-have-been-exhausted-and-the-permission-state-is-definitively-denied-a-thrown-notallowederror-alone-must-not-show-the-blocked-ui-if-the-permission-state-query-returns-granted-5-on-every-successful-getusermedia-call-write-camerapermissiongranted-true-to-localstorage-6-on-component-mount-read-that-localstorage-flag-if-present-silently-call-getusermedia-immediately-without-showing-any-permission-gate-ui-and-only-fall-back-to-showing-the-gate-if-that-silent-attempt-also-fails-after-retries",
+      "title": "Completely rewrite the camera acquisition logic in both `frontend/src/components/ar-room/CameraPermissionGate.tsx` and `frontend/src/components/shared-room/CameraPermissionGate.tsx` to eliminate the false 'Camera Access Blocked' error that appears even when the browser/system has already granted camera permission. The new logic must follow this exact sequence on every attempt: (1) Before calling getUserMedia, query `navigator.permissions.query({ name: 'camera' })`. If the result state is 'denied', show the blocked UI immediately. If 'granted' or 'prompt', proceed to step 2. (2) Attempt getUserMedia using three constraint tiers in order — first `{ video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } } }`, then `{ video: true }`, then `{ video: {} }` — stopping and succeeding at the first tier that does not throw. (3) If getUserMedia throws despite the permission state being 'granted', retry automatically up to 3 times using exponential backoff delays of 250 ms, 500 ms, and 1000 ms before proceeding to the next constraint tier. (4) Only display the 'Camera Access Blocked' / 'reset permissions' error UI after all three constraint tiers and all retries have been exhausted AND the permission state is definitively 'denied'. A thrown NotAllowedError alone must NOT show the blocked UI if the permission state query returns 'granted'. (5) On every successful getUserMedia call, write `cameraPermissionGranted=true` to localStorage. (6) On component mount, read that localStorage flag; if present, silently call getUserMedia immediately without showing any permission gate UI, and only fall back to showing the gate if that silent attempt also fails after retries.",
+      "reqIds": [
+        "REQ-96"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-both-frontend-src-components-ar-room-camerapermissiongate-tsx-and-frontend-src-components-shared-room-camerapermissiongate-tsx-replace-the-current-permission-state-detection-with-a-real-time-permissionchange-event-listener-on-the-permissionstatus-object-returned-by-navigator-permissions-query-name-camera-when-the-permission-state-changes-from-denied-to-granted-e-g-user-updates-browser-settings-without-reloading-automatically-re-trigger-the-getusermedia-acquisition-flow-without-requiring-a-manual-page-reload-remove-the-reload-page-button-as-the-primary-action-instead-show-a-try-again-button-that-re-runs-the-full-acquisition-sequence-described-in-req-96",
+      "title": "In both `frontend/src/components/ar-room/CameraPermissionGate.tsx` and `frontend/src/components/shared-room/CameraPermissionGate.tsx`, replace the current permission state detection with a real-time `permissionchange` event listener on the PermissionStatus object returned by `navigator.permissions.query({ name: 'camera' })`. When the permission state changes from 'denied' to 'granted' (e.g., user updates browser settings without reloading), automatically re-trigger the getUserMedia acquisition flow without requiring a manual page reload. Remove the 'Reload Page' button as the primary action; instead show a 'Try Again' button that re-runs the full acquisition sequence described in REQ-96.",
+      "reqIds": [
+        "REQ-97"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-audit-frontend-src-pages-arroompresencepage-tsx-and-frontend-src-pages-sharedvirtualroompage-tsx-to-ensure-neither-page-calls-getusermedia-or-any-camera-api-directly-before-the-camerapermissiongate-component-has-successfully-completed-its-acquisition-flow-if-any-premature-camera-calls-exist-in-these-pages-e-g-in-useeffect-hooks-that-run-on-mount-before-permission-is-confirmed-remove-or-defer-them-so-they-only-execute-after-the-gate-signals-success-this-prevents-race-conditions-where-a-competing-getusermedia-call-causes-the-gate-s-own-call-to-throw-notallowederror",
+      "title": "Audit `frontend/src/pages/ARRoomPresencePage.tsx` and `frontend/src/pages/SharedVirtualRoomPage.tsx` to ensure neither page calls getUserMedia or any camera API directly before the CameraPermissionGate component has successfully completed its acquisition flow. If any premature camera calls exist in these pages (e.g., in useEffect hooks that run on mount before permission is confirmed), remove or defer them so they only execute after the gate signals success. This prevents race conditions where a competing getUserMedia call causes the gate's own call to throw NotAllowedError.",
+      "reqIds": [
+        "REQ-98"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-hooks-usequeries-ts-update-the-usebackendhealth-query-or-add-it-if-absent-to-call-the-backend-ping-method-immediately-after-actor-creation-as-a-lightweight-connectivity-check-if-the-ping-succeeds-clear-any-backend-unavailable-error-state-if-the-ping-fails-within-3-seconds-show-a-toast-notification-backend-connection-failed-retrying-and-retry-actor-creation-up-to-3-times-with-1-second-intervals-before-surfacing-a-persistent-backend-unavailable-error-state-ensure-this-health-check-runs-automatically-on-actor-availability-and-does-not-require-user-interaction",
+      "title": "In `frontend/src/hooks/useQueries.ts`, update the `useBackendHealth` query (or add it if absent) to call the backend `ping()` method immediately after actor creation as a lightweight connectivity check. If the ping succeeds, clear any 'Backend unavailable' error state. If the ping fails within 3 seconds, show a toast notification 'Backend connection failed — retrying…' and retry actor creation up to 3 times with 1-second intervals before surfacing a persistent 'Backend unavailable' error state. Ensure this health check runs automatically on actor availability and does not require user interaction.",
+      "reqIds": [
+        "REQ-100"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-frontend-src-pages-createroompage-tsx-replace-the-current-actor-readiness-polling-logic-with-the-following-deterministic-flow-on-component-mount-immediately-check-whether-the-actor-is-available-from-the-react-query-cache-if-not-yet-available-display-a-non-blocking-inline-indicator-initializing-connection-and-disable-only-the-submit-button-retry-the-readiness-check-every-500-ms-for-up-to-10-attempts-5-seconds-total-if-the-actor-becomes-available-within-that-window-remove-the-indicator-and-enable-the-submit-button-if-all-10-retries-are-exhausted-without-the-actor-becoming-available-display-a-permanent-inline-error-message-could-not-connect-to-backend-please-refresh-the-page-and-keep-the-submit-button-disabled-do-not-block-or-suspend-the-entire-page-render-while-waiting",
+      "title": "In `frontend/src/pages/CreateRoomPage.tsx`, replace the current actor-readiness polling logic with the following deterministic flow: on component mount, immediately check whether the actor is available from the React Query cache. If not yet available, display a non-blocking inline indicator 'Initializing connection…' and disable only the submit button. Retry the readiness check every 500 ms for up to 10 attempts (5 seconds total). If the actor becomes available within that window, remove the indicator and enable the submit button. If all 10 retries are exhausted without the actor becoming available, display a permanent inline error message 'Could not connect to backend — please refresh the page' and keep the submit button disabled. Do not block or suspend the entire page render while waiting.",
+      "reqIds": [
+        "REQ-102"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-perform-a-ground-up-rewrite-of-the-camera-acquisition-logic-in-both-frontend-src-components-ar-room-camerapermissiongate-tsx-and-frontend-src-components-shared-room-camerapermissiongate-tsx-the-root-cause-appears-to-be-that-the-components-are-not-correctly-reading-the-browser-reported-permission-state-before-attempting-getusermedia-causing-them-to-display-camera-access-blocked-even-when-the-os-browser-has-already-granted-camera-access-the-new-implementation-must-strictly-follow-this-sequence-on-every-acquisition-attempt-1-call-navigator-permissions-query-name-camera-as-permissionname-and-await-the-result-if-the-returned-state-is-denied-immediately-show-the-blocked-error-ui-do-not-call-getusermedia-at-all-if-state-is-granted-or-prompt-proceed-2-attempt-getusermedia-across-three-constraint-tiers-in-strict-order-tier-1-video-facingmode-user-width-ideal-1280-height-ideal-720-tier-2-video-true-tier-3-video-stop-and-succeed-at-the-first-tier-that-resolves-without-throwing-3-if-getusermedia-throws-on-a-given-tier-and-the-permission-state-is-granted-do-not-advance-to-the-error-ui-instead-retry-that-tier-up-to-3-times-with-exponential-backoff-250-ms-500-ms-1000-ms-only-advance-to-the-next-constraint-tier-after-all-retries-for-the-current-tier-are-exhausted-4-only-show-the-camera-access-blocked-error-ui-after-all-three-tiers-and-all-retries-are-exhausted-and-navigator-permissions-query-returns-denied-a-notallowederror-thrown-by-getusermedia-alone-must-never-show-the-blocked-ui-when-the-permission-state-query-returns-granted-5-on-every-successful-getusermedia-call-write-camerapermissiongranted-true-to-localstorage-6-on-component-mount-read-localstorage-getitem-camerapermissiongranted-if-true-silently-call-getusermedia-skipping-the-gate-ui-entirely-using-the-same-tiered-retry-logic-only-fall-back-to-showing-the-permission-gate-ui-if-that-silent-attempt-fails-after-all-retries-7-attach-a-permissionchange-event-listener-to-the-permissionstatus-object-when-state-transitions-to-granted-automatically-re-trigger-the-full-acquisition-flow-without-requiring-a-page-reload-8-show-a-collapsible-diagnostic-panel-visible-by-default-on-error-displaying-current-permission-state-from-navigator-permissions-query-browser-user-agent-string-navigator-mediadevices-availability-and-the-last-error-message-type-encountered",
+      "title": "Perform a ground-up rewrite of the camera acquisition logic in both `frontend/src/components/ar-room/CameraPermissionGate.tsx` and `frontend/src/components/shared-room/CameraPermissionGate.tsx`. The root cause appears to be that the components are not correctly reading the browser-reported permission state before attempting `getUserMedia`, causing them to display 'Camera Access Blocked' even when the OS/browser has already granted camera access. The new implementation must strictly follow this sequence on every acquisition attempt: (1) Call `navigator.permissions.query({ name: 'camera' as PermissionName })` and await the result. If the returned `state` is `'denied'`, immediately show the blocked/error UI — do not call `getUserMedia` at all. If `state` is `'granted'` or `'prompt'`, proceed. (2) Attempt `getUserMedia` across three constraint tiers in strict order: tier 1 — `{ video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } } }`, tier 2 — `{ video: true }`, tier 3 — `{ video: {} }`. Stop and succeed at the first tier that resolves without throwing. (3) If `getUserMedia` throws on a given tier and the permission state is `'granted'`, do NOT advance to the error UI — instead retry that tier up to 3 times with exponential backoff (250 ms, 500 ms, 1000 ms). Only advance to the next constraint tier after all retries for the current tier are exhausted. (4) Only show the 'Camera Access Blocked' error UI after all three tiers and all retries are exhausted AND `navigator.permissions.query` returns `'denied'`. A `NotAllowedError` thrown by `getUserMedia` alone must never show the blocked UI when the permission state query returns `'granted'`. (5) On every successful `getUserMedia` call, write `cameraPermissionGranted=true` to `localStorage`. (6) On component mount, read `localStorage.getItem('cameraPermissionGranted')`. If `'true'`, silently call `getUserMedia` (skipping the gate UI entirely) using the same tiered + retry logic. Only fall back to showing the permission gate UI if that silent attempt fails after all retries. (7) Attach a `permissionchange` event listener to the `PermissionStatus` object; when state transitions to `'granted'`, automatically re-trigger the full acquisition flow without requiring a page reload. (8) Show a collapsible diagnostic panel (visible by default on error) displaying: current permission state from `navigator.permissions.query`, browser user-agent string, `navigator.mediaDevices` availability, and the last error message/type encountered.",
+      "reqIds": [
+        "REQ-103"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-both-frontend-src-components-ar-room-camerapermissiongate-tsx-and-frontend-src-components-shared-room-camerapermissiongate-tsx-overhaul-the-blocked-denied-error-ui-to-handle-the-confirmed-denied-state-where-navigator-permissions-query-name-camera-returns-denied-with-actionable-browser-specific-guidance-when-the-permission-state-is-definitively-denied-1-display-a-clear-prominent-error-message-camera-access-is-blocked-in-your-browser-settings-you-must-manually-allow-camera-access-before-continuing-2-detect-the-browser-from-the-user-agent-string-and-show-a-step-by-step-instruction-block-tailored-to-that-browser-for-chrome-on-windows-click-the-lock-camera-icon-in-the-address-bar-site-settings-camera-allow-then-click-try-again-below-for-chrome-on-android-tap-the-lock-icon-in-the-address-bar-permissions-camera-allow-for-safari-go-to-settings-safari-camera-allow-for-firefox-click-the-lock-icon-connection-secure-more-information-permissions-use-the-camera-allow-include-a-generic-fallback-for-unrecognised-browsers-3-add-a-direct-deep-link-button-labelled-open-chrome-camera-settings-using-chrome-settings-content-camera-via-an-a-tag-with-target-blank-when-chrome-is-detected-with-a-note-that-the-browser-may-block-direct-navigation-to-chrome-urls-and-the-user-may-need-to-paste-it-manually-4-keep-the-existing-try-again-button-that-re-runs-the-full-acquisition-sequence-permission-query-tiered-getusermedia-retry-backoff-5-clear-the-camerapermissiongranted-localstorage-flag-when-the-permission-state-is-confirmed-denied-so-a-subsequent-page-load-does-not-attempt-a-silent-getusermedia-call-against-a-denied-permission-6-the-diagnostic-panel-collapsible-visible-by-default-on-error-must-display-current-permission-state-browser-name-navigator-mediadevices-availability-and-the-last-error-message-this-is-already-required-by-prior-specs-verify-it-is-present-and-accurate",
+      "title": "In both `frontend/src/components/ar-room/CameraPermissionGate.tsx` and `frontend/src/components/shared-room/CameraPermissionGate.tsx`, overhaul the blocked/denied error UI to handle the confirmed-denied state (where `navigator.permissions.query({ name: 'camera' })` returns `'denied'`) with actionable, browser-specific guidance. When the permission state is definitively `'denied'`: (1) Display a clear, prominent error message: 'Camera access is blocked in your browser settings. You must manually allow camera access before continuing.' (2) Detect the browser from the user-agent string and show a step-by-step instruction block tailored to that browser — for Chrome on Windows: 'Click the lock/camera icon in the address bar → Site settings → Camera → Allow, then click Try Again below.' For Chrome on Android: 'Tap the lock icon in the address bar → Permissions → Camera → Allow.' For Safari: 'Go to Settings → Safari → Camera → Allow.' For Firefox: 'Click the lock icon → Connection Secure → More Information → Permissions → Use the Camera → Allow.' Include a generic fallback for unrecognised browsers. (3) Add a direct deep-link button labelled 'Open Chrome Camera Settings' (using `chrome://settings/content/camera` via an `<a>` tag with `target='_blank'`) when Chrome is detected, with a note that the browser may block direct navigation to chrome:// URLs and the user may need to paste it manually. (4) Keep the existing 'Try Again' button that re-runs the full acquisition sequence (permission query → tiered getUserMedia → retry/backoff). (5) Clear the `cameraPermissionGranted` localStorage flag when the permission state is confirmed `'denied'` so a subsequent page load does not attempt a silent getUserMedia call against a denied permission. (6) The diagnostic panel (collapsible, visible by default on error) must display: current permission state, browser name, `navigator.mediaDevices` availability, and the last error message — this is already required by prior specs; verify it is present and accurate.",
+      "reqIds": [
+        "REQ-105"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-both-frontend-src-components-ar-room-camerapermissiongate-tsx-and-frontend-src-components-shared-room-camerapermissiongate-tsx-ensure-the-try-again-button-correctly-re-executes-the-complete-camera-acquisition-sequence-from-scratch-when-the-current-permission-state-is-denied-the-sequence-must-1-re-query-navigator-permissions-query-name-camera-as-permissionname-to-get-the-freshest-permission-state-at-the-moment-the-user-clicks-try-again-do-not-rely-on-a-cached-state-from-the-initial-mount-2-if-the-re-queried-state-is-still-denied-do-not-call-getusermedia-instead-update-the-error-ui-to-show-camera-is-still-blocked-please-follow-the-browser-instructions-above-and-click-try-again-once-more-3-if-the-re-queried-state-has-changed-to-granted-or-prompt-e-g-the-user-updated-browser-settings-in-another-tab-proceed-with-the-tiered-getusermedia-exponential-backoff-sequence-4-ensure-the-button-is-never-in-a-perpetual-loading-disabled-state-if-the-re-query-itself-throws-e-g-permissions-api-not-supported-fall-back-to-attempting-getusermedia-directly-with-the-tiered-constraint-approach",
+      "title": "In both `frontend/src/components/ar-room/CameraPermissionGate.tsx` and `frontend/src/components/shared-room/CameraPermissionGate.tsx`, ensure the 'Try Again' button correctly re-executes the complete camera acquisition sequence from scratch when the current permission state is `'denied'`. The sequence must: (1) Re-query `navigator.permissions.query({ name: 'camera' as PermissionName })` to get the freshest permission state at the moment the user clicks 'Try Again' — do not rely on a cached state from the initial mount. (2) If the re-queried state is still `'denied'`, do not call `getUserMedia`; instead update the error UI to show 'Camera is still blocked — please follow the browser instructions above and click Try Again once more.' (3) If the re-queried state has changed to `'granted'` or `'prompt'` (e.g., the user updated browser settings in another tab), proceed with the tiered getUserMedia + exponential backoff sequence. (4) Ensure the button is never in a perpetual loading/disabled state — if the re-query itself throws (e.g., Permissions API not supported), fall back to attempting getUserMedia directly with the tiered constraint approach.",
+      "reqIds": [
+        "REQ-106"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-both-frontend-src-components-ar-room-camerapermissiongate-tsx-and-frontend-src-components-shared-room-camerapermissiongate-tsx-diagnose-and-fix-the-specific-failure-mode-where-chrome-on-windows-reports-permission-state-as-denied-even-though-the-user-has-granted-camera-access-at-the-os-browser-level-the-fix-must-1-at-the-very-start-of-the-acquisition-flow-call-navigator-permissions-query-name-camera-as-permissionname-and-log-the-returned-state-to-the-console-for-debugging-2-if-the-permissions-api-itself-throws-some-chrome-builds-have-inconsistent-permissionname-support-catch-that-error-and-fall-back-to-calling-getusermedia-directly-with-the-tiered-constraint-approach-do-not-treat-a-permissions-api-failure-as-a-camera-denial-3-treat-a-denied-state-from-the-permissions-api-as-a-hard-block-only-if-getusermedia-also-throws-notallowederror-after-exhausting-all-three-constraint-tiers-ideal-video-true-video-with-exponential-backoff-retries-250-ms-500-ms-1000-ms-per-tier-4-if-the-permissions-api-returns-denied-but-getusermedia-succeeds-a-known-chrome-quirk-accept-the-stream-and-proceed-do-not-block-access-5-clear-localstorage-removeitem-camerapermissiongranted-when-the-acquisition-truly-fails-after-all-tiers-and-retries-so-the-next-load-does-not-silently-attempt-against-a-known-bad-state-6-update-the-diagnostic-panel-collapsible-shown-by-default-on-error-to-display-the-raw-permissions-api-state-whether-the-permissions-api-query-itself-threw-an-error-the-browser-user-agent-navigator-mediadevices-availability-and-the-last-getusermedia-error-name-and-message-this-is-the-exact-scenario-the-user-reported-chrome-on-windows-mediadevices-available-but-the-component-shows-camera-permission-is-denied-in-browser-settings-despite-the-system-having-granted-access",
+      "title": "In both `frontend/src/components/ar-room/CameraPermissionGate.tsx` and `frontend/src/components/shared-room/CameraPermissionGate.tsx`, diagnose and fix the specific failure mode where Chrome on Windows reports permission state as 'denied' even though the user has granted camera access at the OS/browser level. The fix must: (1) At the very start of the acquisition flow, call `navigator.permissions.query({ name: 'camera' as PermissionName })` and log the returned state to the console for debugging. (2) If the Permissions API itself throws (some Chrome builds have inconsistent PermissionName support), catch that error and fall back to calling `getUserMedia` directly with the tiered constraint approach — do NOT treat a Permissions API failure as a camera denial. (3) Treat a 'denied' state from the Permissions API as a hard block ONLY if `getUserMedia` also throws `NotAllowedError` after exhausting all three constraint tiers (ideal → `{ video: true }` → `{ video: {} }`) with exponential backoff retries (250 ms, 500 ms, 1000 ms per tier). (4) If the Permissions API returns 'denied' but `getUserMedia` succeeds (a known Chrome quirk), accept the stream and proceed — do not block access. (5) Clear `localStorage.removeItem('cameraPermissionGranted')` when the acquisition truly fails after all tiers and retries, so the next load does not silently attempt against a known-bad state. (6) Update the diagnostic panel (collapsible, shown by default on error) to display: the raw Permissions API state, whether the Permissions API query itself threw an error, the browser user-agent, `navigator.mediaDevices` availability, and the last `getUserMedia` error name and message. This is the exact scenario the user reported: Chrome on Windows, `mediaDevices` available, but the component shows 'Camera permission is denied in browser settings' despite the system having granted access.",
+      "reqIds": [
+        "REQ-107"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-in-both-frontend-src-components-ar-room-camerapermissiongate-tsx-and-frontend-src-components-shared-room-camerapermissiongate-tsx-update-the-browser-specific-guidance-shown-in-the-denied-blocked-error-ui-to-include-a-chrome-on-windows-specific-note-that-reads-if-you-recently-granted-camera-access-but-still-see-this-error-click-try-again-chrome-sometimes-reports-permissions-incorrectly-if-the-problem-persists-click-the-camera-lock-icon-in-the-address-bar-site-settings-camera-set-to-allow-then-click-try-again-this-addresses-the-confirmed-user-scenario-where-chrome-on-windows-shows-a-false-denial-despite-the-system-having-granted-camera-access",
+      "title": "In both `frontend/src/components/ar-room/CameraPermissionGate.tsx` and `frontend/src/components/shared-room/CameraPermissionGate.tsx`, update the browser-specific guidance shown in the denied/blocked error UI to include a Chrome-on-Windows specific note that reads: 'If you recently granted camera access but still see this error, click Try Again — Chrome sometimes reports permissions incorrectly. If the problem persists: click the camera/lock icon in the address bar → Site settings → Camera → set to Allow, then click Try Again.' This addresses the confirmed user scenario where Chrome on Windows shows a false denial despite the system having granted camera access.",
+      "reqIds": [
+        "REQ-108"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Shared Virtual Room Mode with private room link access and real-time camera sync",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "AI background removal for users in virtual room",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Placement in shared immersive environment with AI lighting correction",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "AR Room Presence Mode with room scanning capability",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Real-time AR projection of remote user with floor detection and spatial placement",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Proper scaling and shadow blending for AR projection",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Capture realistic AR photo of users together",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Real-time photo experience with 3s/5s timer and smart auto-alignment",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "HD image export functionality",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Auto-generated timelapse reel from captured photos",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Multiple camera angles for events (stage view, side view, group view)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-21",
+      "summary": "Apply proper scaling to the AR projection so the remote user appears life-sized in the physical room",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-22",
+      "summary": "Add shadow blending to the AR projection so the remote user casts realistic shadows on the physical environment",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-24",
+      "summary": "Implement a real-time photo experience with a countdown timer offering 3-second and 5-second options",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-25",
+      "summary": "Implement smart auto-alignment that automatically adjusts the camera framing to optimally frame both users in the photo",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-27",
+      "summary": "Auto-generate a timelapse reel from multiple captured photos showing the sequence of photos taken during the session",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-28",
+      "summary": "Replace WebXR-based AR with cross-platform AR solution accessible on all devices (iPhones, Macbooks, Android, Microsoft devices)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-31",
+      "summary": "Fix screen glitching issue on home page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-32",
+      "summary": "Add back button navigation on home page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-33",
+      "summary": "Fix camera access denied error - ensure proper permissions are requested and granted",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-34",
+      "summary": "Request camera permissions explicitly before starting AR or VR mode",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Cheek Pulling gesture: drag fingers on screen to deform recipient's cheek mesh in real-time using AI",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-36",
+      "summary": "Flying Kiss gesture: blow a kiss to send 3D particle that lands as translucent lip-mark on partner's cheek",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-37",
+      "summary": "Heartbeat Sync: detect pulses from both users, vibrate phones in sync, and display 3D heart between users",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-38",
+      "summary": "Sync-Dance: follow on-screen reel tutorials, record both users, and AI-align movements for side-by-side or merged reels",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-39",
+      "summary": "Digital Scratch Card: send link that reveals merged photo with audio message when scratched",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-40",
+      "summary": "AR QR Card: physical card with QR code that plays timelapse reel when scanned",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-41",
+      "summary": "Instant Downloads: one-click access to high-res photo and behind-the-scenes blooper reel",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-49",
+      "summary": "Implement Digital Scratch Card feature: generate a shareable link that displays a scratch card interface, and when scratched reveals the merged photo along with a recorded audio message",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-50",
+      "summary": "Implement AR QR Card feature: generate a QR code that when scanned plays the timelapse reel showing behind-the-scenes moments of the couple figuring out poses",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-51",
+      "summary": "Implement Instant Downloads feature: add one-click download access for both the high-res Perfect Photo and the Behind-the-Scenes blooper reel from the photo gallery interface",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-52",
+      "summary": "Fix persistent camera permission denied error that occurs even after user grants permission and refreshes the page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-53",
+      "summary": "Highlight main features on the landing page and connect them to VR and AR modes",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-55",
+      "summary": "Add proper error handling in the createRoom backend method in main.mo to return descriptive error messages when room creation fails, including validation failures, duplicate room IDs, or storage errors",
+      "reqIds": [
+        "REQ-64"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-64",
+      "summary": "Add proper error handling and descriptive error responses in the backend createRoom method in main.mo: return structured error variants (e.g., #duplicateId, #invalidFormat, #storageFull, #unauthorized) instead of a generic failure string, so the frontend can display specific, actionable error messages to the user.",
+      "reqIds": [
+        "REQ-76"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-65",
+      "summary": "Fix room ID input field not allowing text entry in CreateRoomPage",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-66",
+      "summary": "Integrate Snap Camera Kit for Flying Kiss and Cheek Pull gesture features",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-67",
+      "summary": "Integrate HealthKit (iOS) / Google Fit for Heartbeat Sync feature",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-68",
+      "summary": "Integrate Printrove API for physical delivery (India-wide logistics) of printed photos",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-69",
+      "summary": "Integrate Shotstack for trending reels with programmatic, music-synced auto-editing",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-70",
+      "summary": "Integrate InVideo AI for timelapse blooper photo-to-video automation",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-71",
+      "summary": "Use MediaPipe for Dance Tutorials to track body movement and give 'Stand Here' positioning instructions",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-72",
+      "summary": "Implement Parchment Canvas feature using HTML5 Canvas + Atrament.js for smooth inky handwriting on custom textures",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-73",
+      "summary": "Implement Interactive Email with AMP for Email / Lottie for 'Tap to Open' wax seal animation inside inbox",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-74",
+      "summary": "Integrate Howler.js for audio effects management (paper rustling, wax cracking sounds)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-75",
+      "summary": "Integrate Firebase Realtime Database for real-time sync so both partners see typing/writing instantly",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-76",
+      "summary": "Implement 2-minute timer with setInterval that locks the letter once time is up",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-77",
+      "summary": "Fix 'actor not available' error in Room ID / CreateRoomPage when attempting to create a room",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-78",
+      "summary": "Fix slow and failing backend connection in CreateRoomPage — actor initialization is too slow and not connecting",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-79",
+      "summary": "Audit and fix the backend actor initialization flow in `frontend/src/hooks/useActor.ts` and `frontend/src/hooks/useQueries.ts` to eliminate the slow connection delay. The actor should be initialized eagerly on app mount rather than lazily on first use, and the React Query `staleTime` and `cacheTime` for the actor query should be set to `Infinity` so the actor is never re-fetched unnecessarily. Ensure the actor is created synchronously from a cached identity when available, bypassing any redundant async handshakes.",
+      "reqIds": [
+        "REQ-91"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-81",
+      "summary": "In `frontend/src/hooks/useActor.ts`, ensure the anonymous actor fallback is created instantly using a pre-built `HttpAgent` without triggering `fetchRootKey()` in production builds. Only call `fetchRootKey()` in local development (when `process.env.NODE_ENV === 'development'` or when the canister host is `localhost`). This eliminates the network round-trip that causes the slow initialization on the deployed IC network.",
+      "reqIds": [
+        "REQ-93"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-83",
+      "summary": "In `backend/main.mo`, add a lightweight `ping()` public query method that returns `true` immediately with no side effects. This provides a fast, cheap health-check endpoint for the frontend to verify canister connectivity without invoking any state-modifying logic.",
+      "reqIds": [
+        "REQ-95"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-84",
+      "summary": "In `frontend/src/hooks/useActor.ts`, initialize the backend actor eagerly on app mount rather than lazily on first use. Set the React Query `staleTime` and `gcTime` (cacheTime) for the actor query to `Infinity` so the actor is never re-fetched unnecessarily. When a cached identity is available (from AuthClient), create the actor synchronously from it without triggering any redundant async handshakes. Only call `fetchRootKey()` when running in local development (i.e., when the host is `localhost` or `127.0.0.1`); never call it on the deployed IC network.",
+      "reqIds": [
+        "REQ-99"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-86",
+      "summary": "In `backend/main.mo`, verify that a public query method `ping() : async Bool` exists and returns `true` immediately with no side effects. If it does not exist, add it. This provides a fast, cheap canister health-check endpoint for the frontend.",
+      "reqIds": [
+        "REQ-101"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-88",
+      "summary": "Audit `frontend/src/pages/ARRoomPresencePage.tsx` and `frontend/src/pages/SharedVirtualRoomPage.tsx` to confirm that neither page calls `getUserMedia` or any camera API directly before the corresponding `CameraPermissionGate` component has signalled successful acquisition. Remove or defer any premature `getUserMedia` calls found in `useEffect` hooks or elsewhere that run before camera permission is confirmed, so they execute only after the gate emits its success callback. This prevents race conditions where a competing `getUserMedia` call from the page causes the gate's own call to throw `NotAllowedError`.",
+      "reqIds": [
+        "REQ-104"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Real-Time Virtual Presence",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

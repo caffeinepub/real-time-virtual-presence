@@ -1,0 +1,53 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-24T18:37:12.707Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 2,
+    "implemented": 2,
+    "items": [
+      {
+        "id": "REQ-107",
+        "summary": "In both `frontend/src/components/ar-room/CameraPermissionGate.tsx` and `frontend/src/components/shared-room/CameraPermissionGate.tsx`, diagnose and fix the specific failure mode where Chrome on Windows reports permission state as 'denied' even though the user has granted camera access at the OS/browser level. The fix must: (1) At the very start of the acquisition flow, call `navigator.permissions.query({ name: 'camera' as PermissionName })` and log the returned state to the console for debugging. (2) If the Permissions API itself throws (some Chrome builds have inconsistent PermissionName support), catch that error and fall back to calling `getUserMedia` directly with the tiered constraint approach — do NOT treat a Permissions API failure as a camera denial. (3) Treat a 'denied' state from the Permissions API as a hard block ONLY if `getUserMedia` also throws `NotAllowedError` after exhausting all three constraint tiers (ideal → `{ video: true }` → `{ video: {} }`) with exponential backoff retries (250 ms, 500 ms, 1000 ms per tier). (4) If the Permissions API returns 'denied' but `getUserMedia` succeeds (a known Chrome quirk), accept the stream and proceed — do not block access. (5) Clear `localStorage.removeItem('cameraPermissionGranted')` when the acquisition truly fails after all tiers and retries, so the next load does not silently attempt against a known-bad state. (6) Update the diagnostic panel (collapsible, shown by default on error) to display: the raw Permissions API state, whether the Permissions API query itself threw an error, the browser user-agent, `navigator.mediaDevices` availability, and the last `getUserMedia` error name and message. This is the exact scenario the user reported: Chrome on Windows, `mediaDevices` available, but the component shows 'Camera permission is denied in browser settings' despite the system having granted access.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/ar-room/CameraPermissionGate.tsx",
+          "frontend/src/components/shared-room/CameraPermissionGate.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/ar-room/CameraPermissionGate.tsx",
+          "frontend/src/components/shared-room/CameraPermissionGate.tsx"
+        ]
+      },
+      {
+        "id": "REQ-108",
+        "summary": "In both `frontend/src/components/ar-room/CameraPermissionGate.tsx` and `frontend/src/components/shared-room/CameraPermissionGate.tsx`, update the browser-specific guidance shown in the denied/blocked error UI to include a Chrome-on-Windows specific note that reads: 'If you recently granted camera access but still see this error, click Try Again — Chrome sometimes reports permissions incorrectly. If the problem persists: click the camera/lock icon in the address bar → Site settings → Camera → set to Allow, then click Try Again.' This addresses the confirmed user scenario where Chrome on Windows shows a false denial despite the system having granted camera access.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/ar-room/CameraPermissionGate.tsx",
+          "frontend/src/components/shared-room/CameraPermissionGate.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/ar-room/CameraPermissionGate.tsx",
+          "frontend/src/components/shared-room/CameraPermissionGate.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/components/ar-room/CameraPermissionGate.tsx",
+    "frontend/src/components/shared-room/CameraPermissionGate.tsx",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}
